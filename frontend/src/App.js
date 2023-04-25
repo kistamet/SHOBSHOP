@@ -8,11 +8,29 @@ import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 function App() {
 
   const [products, setProducts] = useState([]);
-  const [cartItems, setCartItems] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
-
+  const [items, setItems] = useState([]);
+  const [subtotal, setSubtotal] = useState(0);
+  const [totalShippingFee, setTotalShippingFee] = useState(0);
+  const [totalDiscount, setTotalDiscount] = useState(0);
+  const [grandTotal, setGrandTotal] = useState(0);
   const handleAddToCart = (product) => {
-    setCartItems([...cartItems, product]);
+    const newItem = {
+      id: product.id,
+      quantity: 1,
+    };
+    const newItems = [...items, newItem];
+    console.log(newItems);
+    setItems(newItems);
+    Axios.post('http://localhost:3001/cart-summary', { items: newItems, couponCode: null })
+      .then((response) => {
+        setSubtotal(response.data.subtotal);
+        setTotalShippingFee(response.data.totalShippingFee);
+        setTotalDiscount(response.data.totalDiscount);
+        setGrandTotal(response.data.grandTotal);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   const getProducts = () => {
     Axios.get('http://localhost:3001/products').then((response) => {
@@ -24,10 +42,7 @@ function App() {
     getProducts();
   }, []);
 
-  useEffect(() => {
-    const totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
-    setTotalPrice(totalPrice);
-  }, [cartItems]);
+
 
   console.log(products)
   return (
@@ -57,7 +72,8 @@ function App() {
                   onClick={() => handleAddToCart(product)}
                 >
                   เพิ่มลงตะกร้า
-                </Button>              </CardContent>
+                </Button>              
+                </CardContent>
             </Card>
           </Grid>
         ))}
@@ -96,10 +112,10 @@ function App() {
             <Button variant="contained" color="primary" sx={{ marginLeft: '10px', width: "100px", height: "50px", backgroundColor: '#99378c' }}>ใช้คูปอง</Button>
           </div>
           <div style={{ marginTop: '20px' }}>
-            <Typography>ราคาสินค้า ({cartItems.length}) ฿{totalPrice}</Typography>
-            <Typography>ค่าส่ง</Typography>
-            <Typography>ส่วนลดจากคูปอง</Typography>
-            <Typography>รวมทั้งหมด</Typography>
+            <Typography>ราคาสินค้า ({items.length}) ฿{subtotal}</Typography>
+            <Typography>ค่าส่ง ฿{totalShippingFee}</Typography>
+            <Typography>ส่วนลดจากคูปอง ฿{totalDiscount}</Typography>
+            <Typography>รวมทั้งหมด ฿{grandTotal}</Typography>
           </div>
         </div>
       </Card>
