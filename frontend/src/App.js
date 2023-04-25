@@ -9,10 +9,10 @@ function App() {
 
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const handleAddToCart = (product) => {
     setCartItems([...cartItems, product]);
-    console.log(cartItems)
   };
   const getProducts = () => {
     Axios.get('http://localhost:3001/products').then((response) => {
@@ -23,6 +23,11 @@ function App() {
   useEffect(() => {
     getProducts();
   }, []);
+
+  useEffect(() => {
+    const totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
+    setTotalPrice(totalPrice);
+  }, [cartItems]);
 
   console.log(products)
   return (
@@ -91,7 +96,7 @@ function App() {
             <Button variant="contained" color="primary" sx={{ marginLeft: '10px', width: "100px", height: "50px", backgroundColor: '#99378c' }}>ใช้คูปอง</Button>
           </div>
           <div style={{ marginTop: '20px' }}>
-            <Typography>ราคาสินค้า ({cartItems.length})</Typography>
+            <Typography>ราคาสินค้า ({cartItems.length}) ฿{totalPrice}</Typography>
             <Typography>ค่าส่ง</Typography>
             <Typography>ส่วนลดจากคูปอง</Typography>
             <Typography>รวมทั้งหมด</Typography>
