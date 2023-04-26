@@ -1,7 +1,5 @@
 import Axios from 'axios'
 import React, { useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
-import { Card } from '@mui/material';
 import "../src/App.css";
 
 function App() {
@@ -65,7 +63,7 @@ function App() {
 
   console.log(products)
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '20px' }}>
+    <div className='layout'>
       <h2 className="Heading">
         รายการสินค้า
       </h2>
@@ -94,23 +92,9 @@ function App() {
           height: "250px",
         }}
       ></p>
-      <Card
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "end",
-          position: "fixed",
-          bottom: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "100%",
-          height: "200px",
-          backgroundColor: "#e1d1e9",
-          padding: "16px",
-        }}
-      >
+      <div class="footer">
         <div className="containerfooter">
-          <Box className="box">
+          <p className="box">
             <input
               label="Input field"
               variant="outlined"
@@ -121,25 +105,25 @@ function App() {
             <button className="button-couponCode" onClick={() => use_couponCode(couponCode)}>
               ใช้คูปอง
             </button>
-          </Box>
-          <Box className="box" marginTop="20px">
+          </p>
+          <p className="box" marginTop="20px">
             <p className="subtotal">ราคาสินค้า ({items.length} ชิ้น) </p>
             <p className="price">฿{subtotal.toLocaleString()}</p>
-          </Box>
-          <Box className="box">
+          </p>
+          <p className="box">
             <p className="shipping">ค่าส่ง</p>
             <p className="price">฿{totalShippingFee.toLocaleString()}</p>
-          </Box>
-          <Box className="box">
+          </p>
+          <p className="box">
             <p className="discount">ส่วนลดจากคูปอง</p>
             <p className="price">฿{totalDiscount.toLocaleString()}</p>
-          </Box>
-          <Box className="box">
+          </p>
+          <p className="box">
             <p className="total">รวมทั้งหมด</p>
             <p className="total">฿{grandTotal.toLocaleString()}</p>
-          </Box>
+          </p>
         </div>
-      </Card>
+      </div>
     </div>
   );
 }
