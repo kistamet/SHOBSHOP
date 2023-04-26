@@ -1,7 +1,7 @@
 import Axios from 'axios'
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
-import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Card } from '@mui/material';
 import "../src/App.css";
 
 function App() {
@@ -13,7 +13,9 @@ function App() {
   const [totalShippingFee, setTotalShippingFee] = useState(0);
   const [totalDiscount, setTotalDiscount] = useState(0);
   const [grandTotal, setGrandTotal] = useState(0);
-  const handleAddToCart = (product) => {
+  const [couponCode, setCouponCode] = useState("");
+
+  const AddToCart = (product) => {
     const newItem = {
       id: product.id,
       quantity: 1,
@@ -21,7 +23,7 @@ function App() {
     const newItems = [...items, newItem];
     console.log(newItems);
     setItems(newItems);
-    Axios.post('http://localhost:9876/cart-summary', { items: newItems, couponCode: null })
+    Axios.post('http://localhost:9876/cart-summary', { items: newItems })
       .then((response) => {
         setSubtotal(response.data.subtotal);
         setTotalShippingFee(response.data.totalShippingFee);
@@ -32,6 +34,25 @@ function App() {
         console.log(error);
       });
   };
+
+  const use_couponCode = (couponCode) => {
+    const payload = {
+      items: items.map(item => ({ id: item.id, quantity: item.quantity })),
+      couponCode: couponCode
+    };
+    console.log(payload)
+    Axios.post('http://localhost:9876/cart-summary', payload)
+      .then((response) => {
+        setSubtotal(response.data.subtotal);
+        setTotalShippingFee(response.data.totalShippingFee);
+        setTotalDiscount(response.data.totalDiscount);
+        setGrandTotal(response.data.grandTotal);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const getProducts = () => {
     Axios.get('http://localhost:9876/products').then((response) => {
       setProducts(response.data)
@@ -61,7 +82,7 @@ function App() {
               <p className="price-product">
                 ฿{product.price.toLocaleString()}
               </p>
-              <button className="button" onClick={() => handleAddToCart(product)}>
+              <button className="button" onClick={() => AddToCart(product)}>
                 เพิ่มลงตะกร้า
               </button>
             </div>
@@ -90,8 +111,14 @@ function App() {
       >
         <div className="containerfooter">
           <Box className="box">
-            <input label="Input field" variant="outlined" className="input-field" placeholder="รหัสคูปอง" />
-            <button className="button-couponCode">
+            <input
+              label="Input field"
+              variant="outlined"
+              className="input-field"
+              placeholder="รหัสคูปอง"
+              value={couponCode}
+              onChange={(event) => setCouponCode(event.target.value)} />
+            <button className="button-couponCode" onClick={() => use_couponCode(couponCode)}>
               ใช้คูปอง
             </button>
           </Box>
