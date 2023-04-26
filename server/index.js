@@ -73,6 +73,6 @@ app.post('/cart-summary', (req, res) => {
     });
   });
   
-app.listen('3001' , () => {
-    console.log('server is running on port 3001')
+app.listen('9876' , () => {
+    console.log('server is running on port 9876')
 })

@@ -43,7 +43,20 @@
   font-weight: 600;
   color: #99378c;
 }
-
+.grid-container {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(5, 1fr);
+  margin-left: 150px;
+  margin-right: 150px;
+}
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
 /* items */
 .container {
   padding-left: 200px;
@@ -52,30 +65,38 @@
 }
 
 .card {
-  max-width: 345px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 10px;
 }
-
-.card img {
-  height: 140px;
+.card-media {
+  width: 100%;
+  height: 150px;
 }
-
-.card .title {
+.card-content {
+  display: flex;
+  flex-direction: column;
+}
+.price-product{
+  font-family: 'Prompt', sans-serif;
+  font-weight: 600; /* regular weight */ 
+  font-size: 17pt;
+  margin: 0;
+  color: #ff1a00;
+}
+.name-product {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%;
+  max-width:100%;
   color: #434343;
   font-family: 'Prompt', sans-serif;
-  font-weight: 400;
+  font-weight: 400; /* regular weight */ 
   font-size: 14pt;
-}
-
-.card .price {
-  color: #ff1a00;
-  font-weight: bold;
-  font-family: 'Prompt', sans-serif;
-  font-weight: 600; /* semi-bold weight */
-  font-size: 17pt;
+  margin: 0;
 }
 
 .card .button {
@@ -84,8 +105,9 @@
   background-color: #99378c;
   color: white;
   font-family: 'Prompt', sans-serif;
-  font-weight: 400; /* semi-bold weight */
+  font-weight: 400; /* regular weight */ 
   font-size: 14pt;
+  border: none;
 }
 
 /* footer */
@@ -102,52 +124,71 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
+  
 }
 
-.items {
+.subtotal {
   font-family: 'Prompt', sans-serif;
-  font-weight: 400;
-  font-size: 16px;
+  font-weight: 400; /* regular weight */ 
+  font-size: 14pt;
+  margin: 0;
 }
 
 .price {
   font-family: 'Prompt', sans-serif;
-  font-weight: 600;
-  font-size: 18px;
-  color: #99378c;
+  font-weight: 400; /* regular weight */ 
+  font-size: 14pt;
+  margin: 0;
 }
 
 .input-field {
   width: 270px;
-  height: 50px;
-  color: white;
+  height: 40px;
+  font-family: 'Prompt', sans-serif;
+  font-weight: 400; /* regular weight */ 
+  font-size: 14pt;
+  color: #434343;
+  border: 1px solid #989898;
+  text-align: center;
 }
 
-.button {
+.button-couponCode {
+  font-family: 'Prompt', sans-serif;
+  font-weight: 400; /* regular weight */  /* semi-bold weight */
+  font-size: 14pt;
   margin-left: 10px;
   width: 100px;
-  height: 50px;
+  height: 40px;
   background-color: #99378c;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
 }
 
 .shipping {
   font-family: 'Prompt', sans-serif;
-  font-size: 16px;
+  font-size: 14pt;
+  margin: 0;
 }
 
 .discount {
   font-family: 'Prompt', sans-serif;
-  font-size: 16px;
+  font-size: 14pt;
+  margin: 0;
 }
 
 .total {
   font-family: 'Prompt', sans-serif;
-  font-size: 17pt;
+  font-size: 14pt;
   font-weight: 600; /* semi-bold weight */
   color: #ff1a00;
+  margin: 0;
 }
 .grandTotal{
   display: flex;
   width: 100%;
   justify-content: space-between;
+  margin: 0;
 }

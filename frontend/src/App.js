@@ -1,8 +1,5 @@
 import Axios from 'axios'
 import React, { useEffect, useState } from 'react';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import "../src/App.css";
@@ -24,7 +21,7 @@ function App() {
     const newItems = [...items, newItem];
     console.log(newItems);
     setItems(newItems);
-    Axios.post('http://localhost:3001/cart-summary', { items: newItems, couponCode: null })
+    Axios.post('http://localhost:9876/cart-summary', { items: newItems, couponCode: null })
       .then((response) => {
         setSubtotal(response.data.subtotal);
         setTotalShippingFee(response.data.totalShippingFee);
@@ -36,7 +33,7 @@ function App() {
       });
   };
   const getProducts = () => {
-    Axios.get('http://localhost:3001/products').then((response) => {
+    Axios.get('http://localhost:9876/products').then((response) => {
       setProducts(response.data)
     });
   }
@@ -45,48 +42,37 @@ function App() {
     getProducts();
   }, []);
 
-
-
   console.log(products)
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '20px' }}>
-      <Typography className="Heading">
+      <h2 className="Heading">
         รายการสินค้า
-      </Typography>
-      <Grid container spacing={3} className="container">
+      </h2>
+      <div class="grid-container">
         {products.map((product) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
-            <Card className="card">
-              <CardMedia
-                component="img"
-                height="140"
-                image={product.imgUrl}
-                alt={product.name}
-              />
-              <CardContent>
-                <Typography className="title">
-                  {product.name}
-                </Typography>
-                <Typography className="price">
-                  ฿{product.price.toLocaleString()}
-                </Typography>
-                <Button
-                  className="button"
-                  onClick={() => handleAddToCart(product)}
-                >
-                  เพิ่มลงตะกร้า
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
+          <div className="card" key={product.id}>
+            <img
+              className="card-media"
+              src={product.imgUrl}
+              alt={product.name}
+            />
+            <div className="card-content">
+              <p className="name-product">{product.name}</p>
+              <p className="price-product">
+                ฿{product.price.toLocaleString()}
+              </p>
+              <button className="button" onClick={() => handleAddToCart(product)}>
+                เพิ่มลงตะกร้า
+              </button>
+            </div>
+          </div>
         ))}
-      </Grid>
-      <Typography
-        sx={{
-          width: "320px",
+      </div>
+      <p
+        style={{
           height: "250px",
         }}
-      ></Typography>
+      ></p>
       <Card
         sx={{
           display: "flex",
@@ -104,26 +90,26 @@ function App() {
       >
         <div className="containerfooter">
           <Box className="box">
-            <TextField label="Input field" variant="outlined" className="input-field" />
-            <Button variant="contained" color="primary" className="buttoninput">
+            <input label="Input field" variant="outlined" className="input-field" placeholder="รหัสคูปอง" />
+            <button className="button-couponCode">
               ใช้คูปอง
-            </Button>
+            </button>
           </Box>
           <Box className="box" marginTop="20px">
-            <Typography className="items">ราคาสินค้า ({items.length}) </Typography>
-            <Typography className="price">฿{subtotal.toLocaleString()}</Typography>
+            <p className="subtotal">ราคาสินค้า ({items.length} ชิ้น) </p>
+            <p className="price">฿{subtotal.toLocaleString()}</p>
           </Box>
           <Box className="box">
-            <Typography className="shipping">ค่าส่ง</Typography>
-            <Typography className="price">฿{totalShippingFee.toLocaleString()}</Typography>
+            <p className="shipping">ค่าส่ง</p>
+            <p className="price">฿{totalShippingFee.toLocaleString()}</p>
           </Box>
           <Box className="box">
-            <Typography className="discount">ส่วนลดจากคูปอง</Typography>
-            <Typography className="price">฿{totalDiscount.toLocaleString()}</Typography>
+            <p className="discount">ส่วนลดจากคูปอง</p>
+            <p className="price">฿{totalDiscount.toLocaleString()}</p>
           </Box>
           <Box className="box">
-            <Typography className="total">รวมทั้งหมด</Typography>
-            <Typography className="total">฿{grandTotal.toLocaleString()}</Typography>
+            <p className="total">รวมทั้งหมด</p>
+            <p className="total">฿{grandTotal.toLocaleString()}</p>
           </Box>
         </div>
       </Card>
