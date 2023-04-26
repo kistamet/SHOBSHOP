@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap');
 .App {
   text-align: center;
 }
@@ -35,4 +36,118 @@
   to {
     transform: rotate(360deg);
   }
+}
+.Heading{
+  font-family: 'Prompt', sans-serif;
+  font-size: 20pt;
+  font-weight: 600;
+  color: #99378c;
+}
+
+/* items */
+.container {
+  padding-left: 200px;
+  padding-right: 200px;
+  padding-top: 20px;
+}
+
+.card {
+  max-width: 345px;
+}
+
+.card img {
+  height: 140px;
+}
+
+.card .title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  color: #434343;
+  font-family: 'Prompt', sans-serif;
+  font-weight: 400;
+  font-size: 14pt;
+}
+
+.card .price {
+  color: #ff1a00;
+  font-weight: bold;
+  font-family: 'Prompt', sans-serif;
+  font-weight: 600; /* semi-bold weight */
+  font-size: 17pt;
+}
+
+.card .button {
+  display: block;
+  width: 100%;
+  background-color: #99378c;
+  color: white;
+  font-family: 'Prompt', sans-serif;
+  font-weight: 400; /* semi-bold weight */
+  font-size: 14pt;
+}
+
+/* footer */
+.containerfooter {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100%;
+  padding-right: 250px;
+}
+
+.box {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.items {
+  font-family: 'Prompt', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.price {
+  font-family: 'Prompt', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: #99378c;
+}
+
+.input-field {
+  width: 270px;
+  height: 50px;
+  color: white;
+}
+
+.button {
+  margin-left: 10px;
+  width: 100px;
+  height: 50px;
+  background-color: #99378c;
+}
+
+.shipping {
+  font-family: 'Prompt', sans-serif;
+  font-size: 16px;
+}
+
+.discount {
+  font-family: 'Prompt', sans-serif;
+  font-size: 16px;
+}
+
+.total {
+  font-family: 'Prompt', sans-serif;
+  font-size: 17pt;
+  font-weight: 600; /* semi-bold weight */
+  color: #ff1a00;
+}
+.grandTotal{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }

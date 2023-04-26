@@ -3,11 +3,14 @@ import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import "../src/App.css";
 
 function App() {
 
   const [products, setProducts] = useState([]);
+
   const [items, setItems] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
   const [totalShippingFee, setTotalShippingFee] = useState(0);
@@ -47,13 +50,13 @@ function App() {
   console.log(products)
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '20px' }}>
-      <Typography variant="h4" component="h1">
+      <Typography className="Heading">
         รายการสินค้า
       </Typography>
-      <Grid container spacing={3} sx={{ paddingLeft: '200px', paddingRight: '200px', paddingTop: '20px' }}>
+      <Grid container spacing={3} className="container">
         {products.map((product) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
-            <Card sx={{ maxWidth: 345 }}>
+            <Card className="card">
               <CardMedia
                 component="img"
                 height="140"
@@ -61,19 +64,19 @@ function App() {
                 alt={product.name}
               />
               <CardContent>
-                <Typography variant="h5" component="div" sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%' }}>
+                <Typography className="title">
                   {product.name}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  ฿{product.price}
+                <Typography className="price">
+                  ฿{product.price.toLocaleString()}
                 </Typography>
                 <Button
-                  sx={{ display: 'block', width: '100%', backgroundColor: '#99378c', color: 'white' }}
+                  className="button"
                   onClick={() => handleAddToCart(product)}
                 >
                   เพิ่มลงตะกร้า
-                </Button>              
-                </CardContent>
+                </Button>
+              </CardContent>
             </Card>
           </Grid>
         ))}
@@ -99,24 +102,29 @@ function App() {
           padding: "16px",
         }}
       >
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'start',
-          alignItems: 'start',
-          height: '100%',
-          paddingRight: '250px'
-        }}>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-            <TextField label="Input field" variant="outlined" sx={{ width: "270px", height: "50px", color: 'white' }} />
-            <Button variant="contained" color="primary" sx={{ marginLeft: '10px', width: "100px", height: "50px", backgroundColor: '#99378c' }}>ใช้คูปอง</Button>
-          </div>
-          <div style={{ marginTop: '20px' }}>
-            <Typography>ราคาสินค้า ({items.length}) ฿{subtotal}</Typography>
-            <Typography>ค่าส่ง ฿{totalShippingFee}</Typography>
-            <Typography>ส่วนลดจากคูปอง ฿{totalDiscount}</Typography>
-            <Typography>รวมทั้งหมด ฿{grandTotal}</Typography>
-          </div>
+        <div className="containerfooter">
+          <Box className="box">
+            <TextField label="Input field" variant="outlined" className="input-field" />
+            <Button variant="contained" color="primary" className="buttoninput">
+              ใช้คูปอง
+            </Button>
+          </Box>
+          <Box className="box" marginTop="20px">
+            <Typography className="items">ราคาสินค้า ({items.length}) </Typography>
+            <Typography className="price">฿{subtotal.toLocaleString()}</Typography>
+          </Box>
+          <Box className="box">
+            <Typography className="shipping">ค่าส่ง</Typography>
+            <Typography className="price">฿{totalShippingFee.toLocaleString()}</Typography>
+          </Box>
+          <Box className="box">
+            <Typography className="discount">ส่วนลดจากคูปอง</Typography>
+            <Typography className="price">฿{totalDiscount.toLocaleString()}</Typography>
+          </Box>
+          <Box className="box">
+            <Typography className="total">รวมทั้งหมด</Typography>
+            <Typography className="total">฿{grandTotal.toLocaleString()}</Typography>
+          </Box>
         </div>
       </Card>
     </div>
