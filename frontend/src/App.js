@@ -4,25 +4,39 @@ import "../src/App.css";
 
 function App() {
 
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]); //สินค้า
 
-  const [items, setItems] = useState([]);
-  const [subtotal, setSubtotal] = useState(0);
-  const [totalShippingFee, setTotalShippingFee] = useState(0);
-  const [totalDiscount, setTotalDiscount] = useState(0);
-  const [grandTotal, setGrandTotal] = useState(0);
-  const [couponCode, setCouponCode] = useState("");
+  const [items, setItems] = useState([]); //ตระกร้าสินค้า
+  const [subtotal, setSubtotal] = useState(0); //ราคาทั้งหมด
+  const [totalShippingFee, setTotalShippingFee] = useState(0); //ราคาส่งทั้งหมด
+  const [totalDiscount, setTotalDiscount] = useState(0); //ราคาลดทั้งหมด
+  const [grandTotal, setGrandTotal] = useState(0); //ราคารวม ค่าจัดส่ง ส่วนลด
+  const [couponCode, setCouponCode] = useState(""); //คูปอง
 
   const AddToCart = (product) => {
-    const newItem = {
+    const AddNewItem = {
       id: product.id,
       quantity: 1,
     };
-    const newItems = [...items, newItem];
-    console.log(newItems);
+    
+    const newItems = items.map(item => { //ตรวจสอบว่าถ้ามี id อยู่แล้วใน items(ตระกร้าสินค้า) จะทำการ quantity + 1
+      if (item.id === AddNewItem.id) {
+        return { ...item, quantity: item.quantity + 1 };
+      } else {
+        return item;
+      }
+    });
+    
+    // ตรวจสอบ id ของสินค้าที่พึ่ง Add มาใน newItems ถ้าไม่เจอสินค้าที่มี id เดียวกัน
+    // ก็เพิ่มสินค้านั้นเข้าไปใน array newItems
+    if (!newItems.some(item => item.id === AddNewItem.id)) {
+      newItems.push(AddNewItem);
+    } 
+
     setItems(newItems);
     Axios.post('http://localhost:9876/cart-summary', { items: newItems })
       .then((response) => {
+        //เมื่อคำนวณเสร็จ ก็รับค่า response มาจาก /cart-summary
         setSubtotal(response.data.subtotal);
         setTotalShippingFee(response.data.totalShippingFee);
         setTotalDiscount(response.data.totalDiscount);
@@ -61,7 +75,8 @@ function App() {
     getProducts();
   }, []);
 
-  console.log(products)
+  const totalQuantity = items.reduce((total, item) => total + item.quantity, 0); //หาจำนวนทั้งหมด
+
   return (
     <div className='layout'>
       <h2 className="Heading">
@@ -107,7 +122,7 @@ function App() {
             </button>
           </p>
           <p className="box" marginTop="20px">
-            <p className="subtotal">ราคาสินค้า ({items.length} ชิ้น) </p>
+            <p className="subtotal">ราคาสินค้า ({totalQuantity} ชิ้น) </p>
             <p className="price">฿{subtotal.toLocaleString()}</p>
           </p>
           <p className="box">
